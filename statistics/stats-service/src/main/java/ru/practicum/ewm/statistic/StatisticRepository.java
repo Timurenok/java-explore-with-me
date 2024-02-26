@@ -23,9 +23,9 @@ public interface StatisticRepository extends JpaRepository<Statistic, Long> {
     List<Statistic> findDistinctByTimestampIsAfterAndTimestampIsBeforeAndUriInOrderByTimestamp(
             LocalDateTime start, LocalDateTime end, List<String> uris);
 
-    @Query("SELECT COUNT(ip)," +
-            "FROM statistics" +
-            "WHERE uri = :uri" +
+    @Query("SELECT COUNT(ip) " +
+            "FROM Statistic " +
+            "WHERE uri = :uri " +
             "GROUP BY uri")
     long countHits(String uri);
 }
