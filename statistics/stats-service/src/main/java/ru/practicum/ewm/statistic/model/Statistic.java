@@ -3,7 +3,6 @@ package ru.practicum.ewm.statistic.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,6 +19,6 @@ public class Statistic {
     private String app;
     private String uri;
     private String ip;
-    @Column(name = "hit")
-    private LocalDateTime timestamp;
+    @Column(name = "moment")
+    private String timestamp;
 }

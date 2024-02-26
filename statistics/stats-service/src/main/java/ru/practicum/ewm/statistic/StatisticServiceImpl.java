@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,18 +35,24 @@ public class StatisticServiceImpl implements StatisticService {
         if (uris != null) {
             if (unique) {
                 return statisticRepository.findDistinctByTimestampIsAfterAndTimestampIsBeforeAndUriInOrderByTimestamp(
-                        startTime, endTime, uris);
+                                startTime, endTime, uris).stream().map(statistic -> statisticMapper
+                                .statisticToStatisticViewDto(statistic, statisticRepository.countHits(statistic.getUri())))
+                        .collect(Collectors.toList());
             }
-            return statisticRepository.findByTimestampIsAfterAndTimestampIsBeforeAndUriInOrderByTimestamp(startTime, endTime,
-                    uris);
+            return statisticRepository.findByTimestampIsAfterAndTimestampIsBeforeAndUriInOrderByTimestamp(startTime,
+                    endTime, uris).stream().map(statistic -> statisticMapper.statisticToStatisticViewDto(statistic,
+                    statisticRepository.countHits(statistic.getUri()))).collect(Collectors.toList());
         }
 
         if (unique) {
             return statisticRepository.findDistinctByTimestampIsAfterAndTimestampIsBeforeOrderByTimestamp(startTime,
-                    endTime);
+                    endTime).stream().map(statistic -> statisticMapper.statisticToStatisticViewDto(statistic,
+                    statisticRepository.countHits(statistic.getUri()))).collect(Collectors
+                    .toList());
         }
         return statisticRepository.findByTimestampIsAfterAndTimestampIsBeforeOrderByTimestamp(startTime,
-                endTime);
+                endTime).stream().map(statistic -> statisticMapper.statisticToStatisticViewDto(statistic,
+                statisticRepository.countHits(statistic.getUri()))).collect(Collectors.toList());
     }
 
     private LocalDateTime parseTimeParam(String time) {

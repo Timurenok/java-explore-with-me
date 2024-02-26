@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS statistics (
     app VARCHAR,
     uri VARCHAR,
     ip VARCHAR,
-    hit TIMESTAMP WITHOUT TIME ZONE
+    moment VARCHAR
 );
