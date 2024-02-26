@@ -34,10 +34,10 @@ public class StatisticServiceImpl implements StatisticService {
 
         if (uris != null) {
             if (unique) {
-                return statisticRepository.findDistinctByTimestampIsAfterAndTimestampIsBeforeAndUriInOrderByTimestamp(
+                return statisticRepository.findByTimestampIsAfterAndTimestampIsBeforeAndUriInOrderByTimestamp(
                                 startTime, endTime, uris).stream().map(statistic -> statisticMapper
-                                .statisticToStatisticViewDto(statistic, statisticRepository.countHits(statistic.getUri())))
-                        .collect(Collectors.toList());
+                                .statisticToStatisticViewDto(statistic, statisticRepository.countUniqueHits(statistic
+                                        .getUri()))).collect(Collectors.toList());
             }
             return statisticRepository.findByTimestampIsAfterAndTimestampIsBeforeAndUriInOrderByTimestamp(startTime,
                     endTime, uris).stream().map(statistic -> statisticMapper.statisticToStatisticViewDto(statistic,
@@ -45,10 +45,9 @@ public class StatisticServiceImpl implements StatisticService {
         }
 
         if (unique) {
-            return statisticRepository.findDistinctByTimestampIsAfterAndTimestampIsBeforeOrderByTimestamp(startTime,
+            return statisticRepository.findByTimestampIsAfterAndTimestampIsBeforeOrderByTimestamp(startTime,
                     endTime).stream().map(statistic -> statisticMapper.statisticToStatisticViewDto(statistic,
-                    statisticRepository.countHits(statistic.getUri()))).collect(Collectors
-                    .toList());
+                    statisticRepository.countUniqueHits(statistic.getUri()))).collect(Collectors.toList());
         }
         return statisticRepository.findByTimestampIsAfterAndTimestampIsBeforeOrderByTimestamp(startTime,
                 endTime).stream().map(statistic -> statisticMapper.statisticToStatisticViewDto(statistic,
