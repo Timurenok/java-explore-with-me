@@ -26,7 +26,7 @@ public class StatisticClient extends BaseClient {
     }
 
     public ResponseEntity<Object> saveHit(StatisticDto statisticDto) {
-        return post("/hit", statisticDto);
+        return post(statisticDto);
     }
 
     public ResponseEntity<Object> findStatistics(String start, String end, List<String> uris, Boolean unique) {
@@ -36,6 +36,6 @@ public class StatisticClient extends BaseClient {
                 "uris", uris,
                 "unique", unique
         );
-        return get("/stats?start={start}&end={end}&uris={uris}&unique={unique}", params);
+        return get(params);
     }
 }
