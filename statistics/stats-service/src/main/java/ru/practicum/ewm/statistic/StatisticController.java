@@ -10,7 +10,6 @@ import ru.practicum.ewm.StatisticViewDto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -29,8 +28,8 @@ public class StatisticController {
     }
 
     @GetMapping("/stats")
-    public List<StatisticViewDto> findStatistics(@NotEmpty @RequestParam LocalDateTime start,
-                                                 @NotEmpty @RequestParam LocalDateTime end,
+    public List<StatisticViewDto> findStatistics(@NotEmpty @RequestParam String start,
+                                                 @NotEmpty @RequestParam String end,
                                                  @RequestParam(required = false) List<String> uris,
                                                  @RequestParam(value = "unique", defaultValue = "false") String unique) {
         Boolean uniqueParam = Boolean.valueOf(unique);

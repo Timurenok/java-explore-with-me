@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.ewm.dto.StatisticDto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +29,7 @@ public class StatisticClient extends BaseClient {
         return post("/hit", statisticDto);
     }
 
-    public ResponseEntity<Object> findStatistics(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
+    public ResponseEntity<Object> findStatistics(String start, String end, List<String> uris, Boolean unique) {
         Map<String, Object> params = Map.of(
                 "start", start,
                 "end", end,
