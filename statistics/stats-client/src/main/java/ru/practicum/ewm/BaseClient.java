@@ -15,12 +15,12 @@ public class BaseClient {
         this.rest = rest;
     }
 
-    protected <T> ResponseEntity<Object> post(T body) {
-        return makeAndSendRequest(HttpMethod.POST, "/hit", null, body);
+    protected ResponseEntity<Object> get(String path, @Nullable Map<String, Object> parameters) {
+        return makeAndSendRequest((HttpMethod.GET), path, parameters, null);
     }
 
-    protected ResponseEntity<Object> get(@Nullable Map<String, Object> parameters) {
-        return makeAndSendRequest((HttpMethod.GET), "/stats?start={start}&end={end}&uris={uris}&unique={unique}", parameters, null);
+    protected <T> ResponseEntity<Object> post(String path, T body) {
+        return makeAndSendRequest(HttpMethod.POST, path, null, body);
     }
 
     private <T> ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path,
@@ -57,7 +57,6 @@ public class BaseClient {
         if (response.hasBody()) {
             return responseBuilder.body(response.getBody());
         }
-
         return responseBuilder.build();
     }
 }
