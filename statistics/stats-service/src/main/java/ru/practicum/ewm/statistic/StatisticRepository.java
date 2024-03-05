@@ -11,11 +11,20 @@ import java.util.List;
 @Repository
 public interface StatisticRepository extends JpaRepository<Statistic, Long> {
 
-    List<Statistic> findByTimestampIsAfterAndTimestampIsBeforeOrderByTimestamp(LocalDateTime start,
-                                                                               LocalDateTime end);
+    @Query("SELECT s " +
+            "FROM Statistic AS s " +
+            "WHERE :start < s.timestamp AND s.timestamp < :end " +
+            "GROUP BY s.id " +
+            "ORDER BY COUNT(s.ip) DESC")
+    List<Statistic> findStatistics(LocalDateTime start, LocalDateTime end);
 
-    List<Statistic> findByTimestampIsAfterAndTimestampIsBeforeAndUriInOrderByTimestamp(
-            LocalDateTime start, LocalDateTime end, List<String> uris);
+    @Query("SELECT s " +
+            "FROM Statistic AS s " +
+            "WHERE :start < s.timestamp AND s.timestamp < :end " +
+            "AND s.uri IN :uris " +
+            "GROUP BY s.id " +
+            "ORDER BY COUNT(s.ip) DESC")
+    List<Statistic> findStatisticsByUri(LocalDateTime start, LocalDateTime end, List<String> uris);
 
     @Query("SELECT COUNT(ip) " +
             "FROM Statistic " +
