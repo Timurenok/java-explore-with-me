@@ -8,7 +8,6 @@ import ru.practicum.ewm.StatisticViewDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,27 +23,18 @@ public class StatisticServiceImpl implements StatisticService {
     }
 
     @Override
-    public List<StatisticViewDto> findStatistics(LocalDateTime startTime, LocalDateTime endTime, List<String> uris, Boolean unique) {
-
-
+    public List<StatisticViewDto> findStatistics(LocalDateTime start, LocalDateTime end, List<String> uris,
+                                                 Boolean unique) {
         if (uris != null) {
             if (unique) {
-                return statisticRepository.findStatisticsByUri(startTime, endTime, uris).stream().map(statistic ->
-                        statisticMapper.statisticToStatisticViewDto(statistic, statisticRepository.countUniqueHits(
-                                statistic.getUri()))).collect(Collectors.toList());
+                return statisticRepository.findStatisticsByTimeAndUriAndUniqueIp(start, end, uris);
             }
-            return statisticRepository.findStatisticsByUri(startTime, endTime, uris).stream().map(statistic ->
-                    statisticMapper.statisticToStatisticViewDto(statistic, statisticRepository.countHits(statistic
-                            .getUri()))).collect(Collectors.toList());
+            return statisticRepository.findStatisticsByTimeAndUri(start, end, uris);
         }
 
         if (unique) {
-            return statisticRepository.findStatistics(startTime, endTime).stream().map(statistic -> statisticMapper
-                    .statisticToStatisticViewDto(statistic, statisticRepository.countUniqueHits(statistic
-                            .getUri()))).collect(Collectors.toList());
+            return statisticRepository.findStatisticsByTimeAndUniqueIp(start, end);
         }
-        return statisticRepository.findStatistics(startTime, endTime).stream().map(statistic -> statisticMapper
-                .statisticToStatisticViewDto(statistic, statisticRepository.countHits(statistic.getUri()))).collect(
-                Collectors.toList());
+        return statisticRepository.findStatisticsByTime(start, end);
     }
 }

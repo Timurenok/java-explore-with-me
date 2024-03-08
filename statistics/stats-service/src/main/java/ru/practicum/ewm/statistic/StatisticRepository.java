@@ -3,6 +3,7 @@ package ru.practicum.ewm.statistic;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import ru.practicum.ewm.StatisticViewDto;
 import ru.practicum.ewm.statistic.model.Statistic;
 
 import java.time.LocalDateTime;
@@ -11,30 +12,32 @@ import java.util.List;
 @Repository
 public interface StatisticRepository extends JpaRepository<Statistic, Long> {
 
-    @Query("SELECT s " +
+    @Query("SELECT new ru.practicum.ewm.StatisticViewDto(s.app, s.uri, COUNT (s.ip))" +
             "FROM Statistic AS s " +
-            "WHERE :start < s.timestamp AND s.timestamp < :end " +
-            "GROUP BY s.id " +
-            "ORDER BY COUNT(s.ip) DESC")
-    List<Statistic> findStatistics(LocalDateTime start, LocalDateTime end);
+            "WHERE s.timestamp BETWEEN :start AND :end " +
+            "GROUP BY s.app, s.uri " +
+            "ORDER BY COUNT (s.ip) DESC")
+    List<StatisticViewDto> findStatisticsByTime(LocalDateTime start, LocalDateTime end);
 
-    @Query("SELECT s " +
+    @Query("SELECT new ru.practicum.ewm.StatisticViewDto(s.app, s.uri, COUNT (DISTINCT s.ip))" +
             "FROM Statistic AS s " +
-            "WHERE :start < s.timestamp AND s.timestamp < :end " +
-            "AND s.uri IN :uris " +
-            "GROUP BY s.id " +
-            "ORDER BY COUNT(s.ip) DESC")
-    List<Statistic> findStatisticsByUri(LocalDateTime start, LocalDateTime end, List<String> uris);
+            "WHERE s.timestamp BETWEEN :start AND :end " +
+            "GROUP BY s.app, s.uri " +
+            "ORDER BY COUNT (s.ip) DESC")
+    List<StatisticViewDto> findStatisticsByTimeAndUniqueIp(LocalDateTime start, LocalDateTime end);
 
-    @Query("SELECT COUNT(ip) " +
-            "FROM Statistic " +
-            "WHERE uri = :uri " +
-            "GROUP BY uri")
-    long countHits(String uri);
+    @Query("SELECT new ru.practicum.ewm.StatisticViewDto(s.app, s.uri, COUNT (s.ip))" +
+            "FROM Statistic AS s " +
+            "WHERE s.timestamp BETWEEN :start AND :end AND s.uri IN :uris " +
+            "GROUP BY s.app, s.uri " +
+            "ORDER BY COUNT (s.ip) DESC")
+    List<StatisticViewDto> findStatisticsByTimeAndUri(LocalDateTime start, LocalDateTime end, List<String> uris);
 
-    @Query("SELECT COUNT (DISTINCT ip) " +
-            "FROM Statistic " +
-            "WHERE uri = :uri " +
-            "GROUP BY uri")
-    long countUniqueHits(String uri);
+    @Query("SELECT new ru.practicum.ewm.StatisticViewDto(s.app, s.uri, COUNT (DISTINCT s.ip))" +
+            "FROM Statistic AS s " +
+            "WHERE s.timestamp BETWEEN :start AND :end AND s.uri IN :uris " +
+            "GROUP BY s.app, s.uri " +
+            "ORDER BY COUNT (s.ip) DESC")
+    List<StatisticViewDto> findStatisticsByTimeAndUriAndUniqueIp(LocalDateTime start, LocalDateTime end,
+                                                                 List<String> uris);
 }
