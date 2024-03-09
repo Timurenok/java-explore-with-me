@@ -19,7 +19,7 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     @Transactional
     public void saveHit(StatisticDto statisticDto) {
-        statisticRepository.save(statisticMapper.statisticDtoToStatistic(statisticDto));
+        statisticRepository.save(statisticMapper.mapToStatistic(statisticDto));
     }
 
     @Override
