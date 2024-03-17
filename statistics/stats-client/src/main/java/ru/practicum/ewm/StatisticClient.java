@@ -30,12 +30,15 @@ public class StatisticClient extends BaseClient {
     }
 
     public ResponseEntity<Object> findStatistics(String start, String end, List<String> uris, Boolean unique) {
+        StringBuilder url = new StringBuilder();
+        for (String uri : uris) {
+            url.append("&uris=").append(uri);
+        }
         Map<String, Object> params = Map.of(
                 "start", start,
                 "end", end,
-                "uris", uris,
                 "unique", unique
         );
-        return get("/stats?start={start}&end={end}&uris={uris}&unique={unique}", params);
+        return get("/stats?start={start}&end={end}" + url + "&unique={unique}", params);
     }
 }
