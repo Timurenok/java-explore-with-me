@@ -19,7 +19,8 @@ public interface RequestMapper {
     @Mapping(target = "status", expression = "java(RequestStatus.PENDING)")
     Request mapToRequest(User requester, Event event);
 
-    @Mapping(target = "requester", source = "request.requester.id")
     @Mapping(target = "event", source = "request.event.id")
+    @Mapping(target = "created", source = "request.createdAt")
+    @Mapping(target = "requester", source = "request.requester.id")
     RequestDto mapToRequestDto(Request request);
 }
