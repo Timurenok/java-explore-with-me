@@ -11,7 +11,7 @@ import ru.practicum.ewm.user.model.dto.UserShortDto;
 public interface UserMapper {
 
     @Mapping(target = "id", expression = "java(null)")
-    User mapToUser(UserInDto UserInDto);
+    User mapToUser(UserInDto userInDto);
 
     UserOutDto mapToUserOutDto(User user);
 

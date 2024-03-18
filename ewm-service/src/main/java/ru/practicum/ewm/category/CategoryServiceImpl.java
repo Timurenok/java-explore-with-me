@@ -23,8 +23,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public CategoryDto save(CategoryInDto CategoryInDto) {
-        Category category = categoryMapper.mapToCategory(CategoryInDto);
+    public CategoryDto save(CategoryInDto categoryInDto) {
+        Category category = categoryMapper.mapToCategory(categoryInDto);
         return categoryMapper.mapToCategoryDto(categoryRepository.save(category));
     }
 
