@@ -19,12 +19,12 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = "/admin/categories")
-    public CategoryDto addCategory(@Valid @RequestBody CategoryInDto categoryInDto) {
+    @PostMapping("/admin/categories")
+    public CategoryDto saveCategory(@Valid @RequestBody CategoryInDto categoryInDto) {
         return categoryService.save(categoryInDto);
     }
 
-    @PatchMapping(value = "admin/categories/{categoryId}")
+    @PatchMapping("admin/categories/{categoryId}")
     public CategoryDto updateCategory(@PathVariable Long categoryId,
                                       @Valid @RequestBody CategoryDto categoryDto) {
         return categoryService.update(categoryId, categoryDto);
@@ -36,7 +36,7 @@ public class CategoryController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping(value = "admin/categories/{categoryId}")
+    @DeleteMapping("admin/categories/{categoryId}")
     public void removeCategory(@PathVariable Long categoryId) {
         categoryService.remove(categoryId);
     }

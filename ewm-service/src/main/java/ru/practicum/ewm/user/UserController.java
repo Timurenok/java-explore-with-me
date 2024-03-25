@@ -22,16 +22,16 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserOutDto addUser(@Valid @RequestBody UserInDto userInDto) {
+    @PostMapping
+    public UserOutDto saveUser(@Valid @RequestBody UserInDto userInDto) {
         log.info("Saving user {}", userInDto);
         return userService.save(userInDto);
     }
 
-    @DeleteMapping(value = "/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@NotNull @PathVariable Long userId) {
+    @DeleteMapping("/{userId}")
+    public void removeUser(@NotNull @PathVariable Long userId) {
         log.info("Deleting user with id {}", userId);
         userService.remove(userId);
     }

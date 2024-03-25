@@ -15,13 +15,13 @@ import java.util.List;
 public class CompilationController {
     private final CompilationService compilationService;
 
-    @PostMapping(value = "/admin/compilations")
     @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/admin/compilations")
     public CompilationDto saveCompilation(@Valid @RequestBody CompilationInDto compilationInDto) {
         return compilationService.save(compilationInDto);
     }
 
-    @PatchMapping(value = "/admin/compilations/{compId}")
+    @PatchMapping("/admin/compilations/{compId}")
     public CompilationDto updateCompilation(@PathVariable Long compId,
                                             @Valid @RequestBody CompilationUpdateRequest updateRequest) {
         return compilationService.update(compId, updateRequest);
@@ -39,8 +39,8 @@ public class CompilationController {
         return compilationService.findById(compId);
     }
 
-    @DeleteMapping(value = "/admin/compilations/{compId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/admin/compilations/{compId}")
     public void removeCompilation(@PathVariable Long compId) {
         compilationService.remove(compId);
     }

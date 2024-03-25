@@ -28,14 +28,14 @@ public class EventController {
     private final EventService eventService;
     private final StatisticClient statisticClient;
 
-    @PostMapping(value = "/users/{userId}/events")
+    @PostMapping("/users/{userId}/events")
     @ResponseStatus(HttpStatus.CREATED)
     public EventFullDto saveEvent(@PathVariable Long userId, @Valid @RequestBody EventInDto eventInDto) {
         log.info("Saving event {} by user with id {}", eventInDto, userId);
         return eventService.save(userId, eventInDto);
     }
 
-    @PatchMapping(value = "/users/{userId}/events/{eventId}")
+    @PatchMapping("/users/{userId}/events/{eventId}")
     public EventFullDto updateEventByUser(@PathVariable Long userId,
                                           @PathVariable Long eventId,
                                           @Valid @RequestBody UpdateEventUserRequest eventUpdate) {
@@ -43,7 +43,7 @@ public class EventController {
         return eventService.updateByUser(userId, eventId, eventUpdate);
     }
 
-    @PatchMapping(value = "/admin/events/{eventId}")
+    @PatchMapping("/admin/events/{eventId}")
     public EventFullDto updateEventByAdmin(@PathVariable Long eventId,
                                            @Valid @RequestBody UpdateEventAdminRequest updateRequest) {
         log.info("Updating event with id {} by admin on {}", eventId, updateRequest);
@@ -118,7 +118,7 @@ public class EventController {
         return eventService.findUserEventRequests(userId, eventId);
     }
 
-    @PatchMapping(value = "/users/{userId}/events/{eventId}/requests")
+    @PatchMapping("/users/{userId}/events/{eventId}/requests")
     public EventRequestStatusUpdateResult updateEventRequestsStatus(@PathVariable Long userId,
                                                                     @PathVariable Long eventId,
                                                                     @Valid @RequestBody EventRequestStatusUpdateRequest

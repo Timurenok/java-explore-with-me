@@ -17,8 +17,8 @@ import java.util.List;
 public class RequestController {
     private final RequestService requestService;
 
-    @PostMapping("/users/{userId}/requests")
     @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/users/{userId}/requests")
     public RequestDto addRequest(@PathVariable Long userId, @NotNull @RequestParam Long eventId) {
         return requestService.save(userId, eventId);
     }

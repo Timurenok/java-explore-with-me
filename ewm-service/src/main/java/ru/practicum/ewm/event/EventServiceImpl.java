@@ -169,8 +169,8 @@ public class EventServiceImpl implements EventService {
         userService.findById(userId);
         Pageable pageable = PageRequest.of(from / size, size);
         List<Event> events = eventRepository.findEventsByInitiatorIdOrderByIdDesc(userId, pageable).getContent();
-        Map<Long, Long> views = eventStatService.findEventsViews(events.stream().map(Event::getId).collect(Collectors
-                .toList()));
+        Map<Long, Long> views = eventStatService.findEventsViews(events.stream().map(Event::getId).collect(
+                Collectors.toList()));
         return events.stream().map(event -> eventMapper.mapToEventShortDto(event, views)).collect(Collectors.toList());
     }
 

@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS events (
     participant_limit INT NOT NULL,
     request_moderation BOOLEAN NOT NULL,
     published_on TIMESTAMP WITHOUT TIME ZONE,
-    state VARCHAR NOT NULL,
+    state VARCHAR(30) NOT NULL,
     confirmed_requests INTEGER,
     CONSTRAINT fk_events_to_categories FOREIGN KEY(category_id) REFERENCES categories(id),
     CONSTRAINT fk_events_to_users FOREIGN KEY(initiator_id) REFERENCES users(id)
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS requests (
     created_at TIMESTAMP NOT NULL,
     event_id INT NOT NULL,
     requester_id INT NOT NULL,
-    status VARCHAR NOT NULL,
+    status VARCHAR(15) NOT NULL,
     CONSTRAINT fk_requests_to_events FOREIGN KEY(event_id) REFERENCES events(id),
     CONSTRAINT fk_requests_to_users FOREIGN KEY(requester_id) REFERENCES users(id)
 );

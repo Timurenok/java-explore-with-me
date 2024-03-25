@@ -24,6 +24,7 @@ public interface EventMapper {
     @Mapping(target = "id", expression = "java(null)")
     @Mapping(target = "category", source = "category")
     @Mapping(target = "isPaid", source = "eventInDto.paid")
+    @Mapping(target = "publishedOn", expression = "java(null)")
     @Mapping(target = "compilations", expression = "java(null)")
     @Mapping(target = "state", expression = "java(EventState.PENDING)")
     @Mapping(target = "createdOn", expression = "java(LocalDateTime.now())")

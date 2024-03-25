@@ -16,7 +16,7 @@ import java.util.Map;
 public class StatisticClient extends BaseClient {
 
     @Autowired
-    public StatisticClient(@Value("${stats-service.url}") String serviceUrl, RestTemplateBuilder builder) {
+    public StatisticClient(@Value("${STATS_SERVICE_URL}") String serviceUrl, RestTemplateBuilder builder) {
         super(
                 builder
                         .uriTemplateHandler(new DefaultUriBuilderFactory(serviceUrl))
@@ -25,8 +25,8 @@ public class StatisticClient extends BaseClient {
         );
     }
 
-    public ResponseEntity<Object> saveHit(StatisticDto statisticDto) {
-        return post("/hit", statisticDto);
+    public void saveHit(StatisticDto statisticDto) {
+        post("/hit", statisticDto);
     }
 
     public ResponseEntity<Object> findStatistics(String start, String end, List<String> uris, Boolean unique) {

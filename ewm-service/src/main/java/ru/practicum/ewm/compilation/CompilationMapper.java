@@ -9,9 +9,9 @@ import ru.practicum.ewm.compilation.model.dto.CompilationInDto;
 import ru.practicum.ewm.event.EventMapper;
 import ru.practicum.ewm.event.model.Event;
 
-import java.util.stream.Collectors;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = org.mapstruct.MappingConstants.ComponentModel.SPRING, uses = EventMapper.class,
         imports = Collectors.class)
@@ -27,7 +27,7 @@ public abstract class CompilationMapper {
 
     @Mapping(target = "pinned", source = "compilation.isPinned")
     @Mapping(target = "events",
-            expression = "java(compilation.getEvents().stream().map(event -> eventMapper.mapToEventShortDto(event, views))" +
-                    ".collect(Collectors.toList()))")
+            expression = "java(compilation.getEvents().stream().map(event -> " +
+                    "eventMapper.mapToEventShortDto(event, views)).collect(Collectors.toList()))")
     public abstract CompilationDto mapToCompilationDto(Compilation compilation, Map<Long, Long> views);
 }

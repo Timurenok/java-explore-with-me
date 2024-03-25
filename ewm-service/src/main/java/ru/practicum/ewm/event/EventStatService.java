@@ -54,8 +54,7 @@ public class EventStatService {
             }
             if (!stats.isEmpty()) {
                 for (StatisticViewDto stat : stats) {
-                    eventsViews.put(Long.parseLong(stat.getUri().split("/", 0)[2]),
-                            stat.getHits());
+                    eventsViews.put(Long.parseLong(stat.getUri().split("/", 0)[2]), stat.getHits());
                 }
             }
         }
