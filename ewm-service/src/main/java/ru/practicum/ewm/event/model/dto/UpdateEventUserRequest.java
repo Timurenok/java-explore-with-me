@@ -22,6 +22,7 @@ public class UpdateEventUserRequest {
     private String eventDate;
     private Location location;
     private Boolean paid;
+    @Positive
     private Integer participantLimit;
     private Boolean requestModeration;
     private String stateAction;

@@ -69,13 +69,12 @@ public class EventController {
                                                 @RequestParam(required = false) List<String> states,
                                                 @RequestParam(required = false) List<Long> categories,
                                                 @RequestParam(required = false) @DateTimeFormat(pattern = TIME_FORMAT)
-                                                LocalDateTime rangeStart,
+                                                LocalDateTime start,
                                                 @RequestParam(required = false) @DateTimeFormat(pattern = TIME_FORMAT)
-                                                LocalDateTime rangeEnd,
+                                                LocalDateTime end,
                                                 @RequestParam(required = false, defaultValue = "0") Integer from,
                                                 @RequestParam(required = false, defaultValue = "10") Integer size) {
-        EventAdminParam eventAdminParam = new EventAdminParam(users, states, categories, rangeStart, rangeEnd, from,
-                size);
+        EventAdminParam eventAdminParam = new EventAdminParam(users, states, categories, start, end, from, size);
         log.info("Getting events by admin");
         return eventService.findEventsByAdmin(eventAdminParam);
     }
